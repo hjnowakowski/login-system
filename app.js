@@ -33,7 +33,7 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
-app.use(cookieparser());
+app.use(cookieParser());
 
 //Set Static folders
 app.use(express.static(path.join(__dirname, 'public'))); //in public file styles, jquery etc are stored
@@ -73,10 +73,11 @@ app.use(flash());
 
 //global variables
 
-app.use(function (req, res, nest){
+app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
   next();
 });
 //res.locals is used to create global variables
@@ -84,8 +85,8 @@ app.use(function (req, res, nest){
 app.use('/', routes);
 app.use('/users', users);
 
-app.set('port', (process.env.PORT || 3002));
+app.set('port', (process.env.PORT || 3000));
 
 app.listen(app.get('port'), function(){
-  console.log('Server started on port ' + app.get('port'));
+	console.log('Server started on port '+app.get('port'));
 });

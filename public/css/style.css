@@ -84,3 +84,7 @@ body {
 footer{
   margin-top: 40px;
 }
+
+.norice error{
+  color: red;
+}
